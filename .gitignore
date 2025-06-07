@@ -4,3 +4,5 @@ Downloads
 Uploads
 encryption_key.enc
 .DS_Store
+keys
+__pycache__

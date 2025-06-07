@@ -1,0 +1,6 @@
+CHUNK_SIZE = 4096
+MB_RATE = 1_000_000
+UPLOAD_DESTINATION = "Data/Uploads"
+DOWNLOAD_DESTINATION = "Data/Downloads"
+SAMPLES_PATH = "Data/Samples"
+DEFAULT_UI = "Questionary"
