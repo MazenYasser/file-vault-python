@@ -9,4 +9,8 @@ class QuestionaryTUI():
     
     def run(self):
         chosen_action = question_bank["choose_action"].ask()
-        routes[chosen_action](question_bank, self.vault)
+        action_choice = routes.get(chosen_action)
+        if action_choice is None:
+            raise NotImplementedError("This action has not been implemented yet.")
+        action_choice(question_bank=question_bank, vault=self.vault)
+        
