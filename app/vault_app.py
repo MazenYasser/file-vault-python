@@ -1,10 +1,12 @@
 from .uploader import upload_chunks
 from .downloader import download_file
+from app.config import Config
+
 
 class FileVaultApp:
-    def __init__(self, fernet):
+    def __init__(self, fernet, config: Config):
         self.fernet = fernet
-        # self.config = config
+        self.config = config
     
     def upload(self, directory, file):
         """
@@ -14,7 +16,7 @@ class FileVaultApp:
             directory (str): Path to the folder that contains the file
             file (str): The file name to upload
         """
-        return upload_chunks(fernet=self.fernet, directory=directory, file=file)
+        return upload_chunks(vault=self, fernet=self.fernet, directory=directory, file=file)
         
     
     def download(self, directory, file):
@@ -25,4 +27,4 @@ class FileVaultApp:
             directory (str): Download destination
             file (str): The file name to download
         """
-        return download_file(fernet=self.fernet, directory=directory, file=file)
+        return download_file(vault=self, fernet=self.fernet, directory=directory, file=file)

@@ -1,12 +1,13 @@
 import traceback
 from cryptography.fernet import Fernet
-from app.config import *
 from cli_interface.Questionary.questionary_tui import QuestionaryTUI
 from app.vault_app import FileVaultApp
+from app.config import get_or_create_config, initialize_config
 
 
-def main(fernet):
-    vault = FileVaultApp(fernet)
+
+def main(fernet, config):
+    vault = FileVaultApp(fernet, config)
     print("🔒 Welcome to the FileVault! ")
     try:
         ui = QuestionaryTUI(vault=vault)
@@ -22,9 +23,11 @@ if __name__ == '__main__':
     try:
         encryption_key = open("keys/encryption_key.enc").read()
         fernet = Fernet(encryption_key)
-        main(fernet)
+        config_paths = initialize_config()
+        config = get_or_create_config(*config_paths)
+        main(fernet, config)
     except OSError as e:
-        print(f"Encryption key error: {e}")
+        print(f"App startup error: {e}")
     except KeyboardInterrupt:
         print("Bye!")
 

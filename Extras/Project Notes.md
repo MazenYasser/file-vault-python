@@ -1,4 +1,5 @@
 # Simple file uploader ideas, lessons.
+----------------------------------------
 
 # Compression Methods Overview
 

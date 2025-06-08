@@ -2,11 +2,10 @@ import io
 import os
 from zstandard import ZstdCompressor
 from tqdm import tqdm
-from .config import UPLOAD_DESTINATION, CHUNK_SIZE, MB_RATE
+from .config import CHUNK_SIZE, MB_RATE
 
-
-def upload_chunks(fernet, directory, file):
-    upload_destination = f"{UPLOAD_DESTINATION}/{file}.zst.maz"
+def upload_chunks(vault, fernet, directory, file):
+    upload_destination = f"{vault.config.upload_destination}/{file}.zst.maz"
     cctx = ZstdCompressor(level=22)
     with io.BytesIO() as memory_buffer:
         

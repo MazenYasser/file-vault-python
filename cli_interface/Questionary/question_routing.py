@@ -1,5 +1,4 @@
 from enum import Enum
-from app.config import *
 from .sequence_functions import trigger_download_sequence, trigger_upload_sequence, trigger_exit_sequence
 
 class ActionChoices(Enum):
