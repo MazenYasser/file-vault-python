@@ -6,8 +6,8 @@ from app.config import get_or_create_config, initialize_config
 
 
 
-def main(fernet, config):
-    vault = FileVaultApp(fernet, config)
+def main(fernet, config, config_path):
+    vault = FileVaultApp(fernet, config, config_path)
     print("🔒 Welcome to the FileVault! ")
     try:
         ui = QuestionaryTUI(vault=vault)
@@ -24,8 +24,8 @@ if __name__ == '__main__':
         encryption_key = open("keys/encryption_key.enc").read()
         fernet = Fernet(encryption_key)
         config_paths = initialize_config()
-        config = get_or_create_config(*config_paths)
-        main(fernet, config)
+        config, config_path = get_or_create_config(*config_paths)
+        main(fernet, config, config_path)
     except OSError as e:
         print(f"App startup error: {e}")
     except KeyboardInterrupt:

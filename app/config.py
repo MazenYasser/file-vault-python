@@ -3,6 +3,7 @@ import json
 import sys
 from pathlib import Path
 from dataclasses import dataclass
+from typing import Tuple
 
 CHUNK_SIZE = 4096
 MB_RATE = 1_000_000
@@ -39,16 +40,16 @@ def validate_input(config_path: str) -> bool:
     except Exception as e:
         return False
 
-def load_config(config_path: str) -> Config:
+def load_config(config_path: str) -> Tuple[Config, str]:
     with open(config_path, "r") as config_file:
         data = json.load(config_file)
-    return Config(**data)
+    return Config(**data), config_path
 
 def save_config(config_path: str, config: Config):
     with open(config_path, "w") as config_file:
         config_file.write(json.dumps(config.__dict__, indent=4))
 
-def manual_config(config_path) -> Config:
+def manual_config(config_path) -> Tuple[Config, str]:
     config = {
         "upload_destination": questionary.path(
             message="Choose Upload Destination: ",
@@ -78,11 +79,9 @@ def manual_config(config_path) -> Config:
         return manual_config(config_path)
     save_config(config_path, cfg)
     print("Config saved successfully.")
-    return cfg
+    return cfg, config_path
 
-
-
-def get_or_create_config(config_path, default_config_path) -> Config:
+def get_or_create_config(config_path, default_config_path) -> Tuple[Config, str]:
     if config_path.exists():
         valid = validate_input(config_path)
         if valid:
@@ -106,9 +105,9 @@ def get_or_create_config(config_path, default_config_path) -> Config:
         if choice == "Load Defaults":
             # Load default config and write to the config.json
             print("Loading default config...")
-            default_config = load_config(default_config_path)
+            default_config, config_path = load_config(default_config_path)
             save_config(config_path, default_config)
-            return default_config
+            return default_config, config_path
         elif choice == "Manual Config":
             return manual_config(config_path)
         else:

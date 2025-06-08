@@ -4,9 +4,10 @@ from app.config import Config
 
 
 class FileVaultApp:
-    def __init__(self, fernet, config: Config):
+    def __init__(self, fernet, config: Config, config_path):
         self.fernet = fernet
         self.config = config
+        self.config_path = config_path
     
     def upload(self, directory, file):
         """
