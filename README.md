@@ -1,6 +1,7 @@
 # 🔒 FileVault
 
 **A modular terminal-based encrypted file storage and retrieval system with compression, configuration, and TUI support using Questionary.**
+---
 Video demo: [FileVault Youtube demo](https://www.youtube.com/watch?v=YXFQwEj1E1k)
 ---
 
