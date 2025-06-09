@@ -1,4 +1,5 @@
 import traceback
+import sys
 from cryptography.fernet import Fernet
 from cli_interface.Questionary.questionary_tui import QuestionaryTUI
 from app.vault_app import FileVaultApp
@@ -13,6 +14,9 @@ def main(fernet, config):
         ui = QuestionaryTUI(vault=vault)
         while True:
             ui.run()
+    except KeyboardInterrupt:
+        print("Bye!")
+        sys.exit(0)
     except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         print("\033[91m" + f"Fatal error: {e}" + "\033[0m")
@@ -33,8 +37,6 @@ if __name__ == '__main__':
         main(fernet, config)
     except OSError as e:
         print(f"App startup error: {e}")
-    except KeyboardInterrupt:
-        print("Bye!")
 
 
 
