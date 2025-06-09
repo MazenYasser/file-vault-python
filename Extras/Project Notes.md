@@ -86,3 +86,37 @@
 - Colorized terminal output (e.g., `\033[92m`) improves UX with clear status messages.
 
 ---
+# 📚 Lessons and Concepts Learned (Saturday, June 8 2025)
+
+## 🧠 Path Handling and Cross-Platform CLI UX
+
+- **Pathlib's Path().resolve()** ensures paths are absolute and platform-safe.
+- Drag-and-drop file paths into terminals on macOS often enclose the path in single quotes (`'`). Strip these for correctness.
+- Always use `Path()` or `Pathlib` for combining paths, not string concatenation.
+
+## 🛠 Configuration Management
+
+- **Dataclasses** are great for representing structured config objects (e.g., `Config`).
+- You can validate configuration with methods like `.is_valid()` that iterate through annotated fields.
+- Always sanitize user path inputs in CLI apps: check `exists()` and `is_dir()` to avoid invalid configs.
+- Config files can be safely stored in a dot-prefixed folder (e.g., `.filevault_config`) to semi-hide them from casual users.
+- When saving to disk, always validate user inputs before writing to avoid corrupted config state.
+
+## 🧩 Global Config Access
+
+- Returning both `config` and `config_path` is okay for smaller apps, but...
+- The **Module-as-Singleton** pattern (e.g., `from app import settings`) provides a cleaner, Django-like API.
+- `settings.configure(...)` followed by `get_config()` lets you access config globally without passing it around everywhere.
+
+## ✅ CLI Flow & Questionary UX
+
+- `questionary.ask()` returns `None` on cancellation (e.g., Ctrl+C). Always check for `None` to prevent crashes.
+- Wrapping each prompt in a loop lets you gracefully re-prompt or exit on invalid input.
+- You can dynamically generate TUI options (like actions or file lists) by querying the file system at runtime.
+
+## 🧠 General Concepts
+
+- **Singletons** give global access to a single instance of something. In Python, modules themselves act like singletons.
+- **Avoid using `globals()` for mutable state** — prefer encapsulated modules or dependency injection.
+- **Design patterns** are tools — use them to solve real problems (like managing state), not just for their own sake.
+-------------------
