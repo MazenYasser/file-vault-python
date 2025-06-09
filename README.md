@@ -114,7 +114,7 @@ python3 main.py
 ## ✅ Future work
 - Action history log
 - Password change flow
-- File deduplication
+- Uploading folders
 - Argparse CLI, to make the app usable with no TUI.
 
 ## 👨‍💻 Author
