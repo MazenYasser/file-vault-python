@@ -120,3 +120,63 @@
 - **Avoid using `globals()` for mutable state** — prefer encapsulated modules or dependency injection.
 - **Design patterns** are tools — use them to solve real problems (like managing state), not just for their own sake.
 -------------------
+## 🔐 Password-Based Encryption and Secure Key Management
+
+### PBKDF2 (Password-Based Key Derivation Function 2)
+- Used `PBKDF2HMAC` to derive a secure key from a password + random salt.
+- Benefits:
+  - Prevents brute-force attacks with strong hashing (SHA256) and high iteration count.
+  - Salt ensures uniqueness, even with identical passwords.
+
+### Fernet Encryption
+- A symmetric encryption system built into the `cryptography` library.
+- Used Fernet to generate an encryption key, encrypt it using the derived key from PBKDF2, and store it securely.
+
+### Secrets File (`secrets.json`)
+- Stores:
+  - Base64-encoded `salt`
+  - Encrypted Fernet key
+- Does **not** store plaintext passwords.
+- Must be secured using file permissions (e.g., `chmod 600`).
+
+### Password Handling
+- Used `getpass.getpass()` to securely prompt for passwords without echoing input.
+- Validated passwords on startup with `InvalidToken` exception handling.
+
+### Lessons About Decryption Logic
+- A Fernet key encrypted with a derived key must be decrypted correctly each session.
+- Changing passwords invalidates previously encrypted files — user must be warned.
+
+## 🔄 Configuration Handling
+
+### Pathlib
+- Used `Path` objects for clean, OS-agnostic path manipulations.
+- Implemented `.resolve()`, `.parent`, `.exists()`, `.mkdir(parents=True)`, etc.
+
+### Singleton via Module Pattern
+- Centralized access to app configuration via `settings.py` module.
+- Clean way to simulate Django's `from django.conf import settings`.
+
+### Drag & Drop + Input Sanitization
+- Supported drag-and-drop file paths into terminal input.
+- Cleaned single quotes around paths to prevent errors.
+
+## 🧠 TUI (Text-based User Interface)
+
+### Questionary
+- Used for interactive menus and prompts.
+- Dynamically rebuilt `question_bank` at runtime to avoid premature evaluation.
+
+### Dispatch Map & Routing
+- Mapped menu actions to specific handler functions.
+- Simplified code by eliminating `if`/`match` branching in favor of function routing.
+
+### Modular Structure
+- Extracted concerns into:
+  - `questionary_tui.py`
+  - `question_routing.py`
+  - `sequence_functions.py`
+  - `settings.py`
+  - `vault_app.py`
+
+---
