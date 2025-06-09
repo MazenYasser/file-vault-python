@@ -1,9 +1,4 @@
 .venv
-Samples
-Downloads
-Uploads
-encryption_key.enc
 .DS_Store
-keys
 __pycache__
 .filevault_config
