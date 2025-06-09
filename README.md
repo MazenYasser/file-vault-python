@@ -21,8 +21,10 @@
 ---
 
 ## 📂 Project Structure
+
+```plaintext
 .filevault_config/
-└── config.json         # User config (upload/download dirs)
+├── config.json         # User config (upload/download dirs)
 └── secrets.json        # Salt + encrypted Fernet key (secured)
 
 app/
@@ -38,14 +40,14 @@ cli_interface/Questionary/
 ├── question_routing.py
 └── sequence_functions.py
 
-.Data/
-└── Downloads        # Default downloads folder
-└── Uploads          # Default uploads folder
-└── Samples          # Includes test samples   
+Data/
+├── Downloads           # Default downloads folder
+├── Uploads             # Default uploads folder
+└── Samples             # (Optional) test sample files
 
-encryption_key_generator.py # Generates + encrypts Fernet key (PBKDF2)
-main.py                     # Entry point
-
+encryption_key_generator.py   # Generates + encrypts Fernet key (PBKDF2)
+main.py                       # Entry point
+```
 ---
 
 ## 🔐 How Encryption Works
