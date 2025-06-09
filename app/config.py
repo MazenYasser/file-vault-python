@@ -66,7 +66,7 @@ def manual_config(config_path) -> Tuple[Config, str]:
         if not path:
             print("Cancelled by user, Exiting program...")
             sys.exit(1)
-        config[key] = str(Path(path).resolve())
+        config[key] = str(Path(path)).replace("'", "")
 
     cfg = Config(**config)
     if not cfg.is_valid():
@@ -100,7 +100,7 @@ def get_or_create_config(config_path, default_config_path) -> Tuple[Config, str]
         if choice == "Load Defaults":
             # Load default config and write to the config.json
             print("Loading default config...")
-            default_config, config_path = load_config(default_config_path)
+            default_config, _ = load_config(default_config_path)
             save_config(config_path, default_config)
             return default_config, config_path
         elif choice == "Manual Config":

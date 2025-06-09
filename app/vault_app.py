@@ -1,4 +1,4 @@
-from .uploader import upload_chunks
+from .uploader import upload_file
 from .downloader import download_file
 from app.config import Config
 
@@ -17,7 +17,7 @@ class FileVaultApp:
             directory (str): Path to the folder that contains the file
             file (str): The file name to upload
         """
-        return upload_chunks(vault=self, fernet=self.fernet, file=file)
+        return upload_file(vault=self, fernet=self.fernet, file=file)
         
     
     def download(self, directory, file):

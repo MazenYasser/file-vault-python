@@ -1,5 +1,4 @@
 {
     "upload_destination": "Data/Uploads",
-    "download_destination": "Data/Downloads",
-    "samples_path": "Data/Samples"
+    "download_destination": "Data/Downloads"
 }

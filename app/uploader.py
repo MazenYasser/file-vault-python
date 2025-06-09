@@ -5,7 +5,7 @@ from tqdm import tqdm
 from pathlib import Path
 from .config import CHUNK_SIZE, MB_RATE
 
-def upload_chunks(vault, fernet, file: Path):
+def upload_file(vault, fernet, file: Path):
     cctx = ZstdCompressor(level=22)
     with io.BytesIO() as memory_buffer:
         
