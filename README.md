@@ -121,6 +121,7 @@ python3 main.py
 ## 👨‍💻 Author
 
 Built by Mazen Yasser with ❤️ and ☕
+Approximate development time: 30 hours over 5 days | Approximate Lines of code: 355
 
 
 If you loved this project and wanted to connect, you can find me on [LinkedIn](https://www.linkedin.com/in/mazen-yasser225/)
