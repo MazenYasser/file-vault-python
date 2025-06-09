@@ -1,6 +1,8 @@
-import questionary
-from .question_routing import action_choices
 from pathlib import Path
+
+import questionary
+
+from .question_routing import action_choices
 
 
 def initialize_question_bank(cfg):

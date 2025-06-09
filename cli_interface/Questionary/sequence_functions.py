@@ -1,9 +1,12 @@
 import sys
 from pathlib import Path
-from app.vault_app import FileVaultApp
+
+from questionary import Question
+
 from app.config import manual_config
 from app.settings import get_config_path
-from questionary import Question
+from app.vault_app import FileVaultApp
+
 
 def trigger_upload_sequence(question_bank: dict[str, Question], vault: FileVaultApp):
     selected_file = question_bank["select_file_upload"].ask()

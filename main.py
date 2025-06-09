@@ -1,10 +1,13 @@
-import traceback
 import sys
+import traceback
+
 from cryptography.fernet import Fernet
-from cli_interface.Questionary.questionary_tui import QuestionaryTUI
-from app.vault_app import FileVaultApp
-from app.config import get_or_create_config, initialize_config
+
 from app import settings
+from app.config import get_or_create_config, initialize_config
+from app.vault_app import FileVaultApp
+from cli_interface.Questionary.questionary_tui import QuestionaryTUI
+from encryption_key_generator import get_or_create_key
 
 
 def main(fernet, config):
@@ -26,7 +29,7 @@ def main(fernet, config):
 if __name__ == '__main__':
     try:
         # Load the encryption key
-        encryption_key = open("keys/encryption_key.enc").read()
+        encryption_key = get_or_create_key()
         fernet = Fernet(encryption_key)
         # Setup the config paths and create files if not existing
         config_path, default_config_path = initialize_config()
@@ -38,13 +41,3 @@ if __name__ == '__main__':
     except OSError as e:
         print(f"App startup error: {e}")
 
-
-
-
-# import hashlib
-# def md5(fname):
-#     hash_md5 = hashlib.md5()
-#     with open(fname, "rb") as f:
-#         for chunk in iter(lambda: f.read(4096), b""):
-#             hash_md5.update(chunk)
-#     return hash_md5.hexdigest()

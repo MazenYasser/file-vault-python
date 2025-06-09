@@ -1,5 +1,7 @@
 from zstandard import ZstdDecompressor
+
 from .config import CHUNK_SIZE
+
 
 # TODO: Make the Upload and download directories selectable by the user.
 def download_file(vault, fernet, directory, file): 

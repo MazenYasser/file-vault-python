@@ -1,6 +1,7 @@
-from .uploader import upload_file
-from .downloader import download_file
 from app.config import Config
+
+from .downloader import download_file
+from .uploader import upload_file
 
 
 class FileVaultApp:

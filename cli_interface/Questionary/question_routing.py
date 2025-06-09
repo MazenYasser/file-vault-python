@@ -1,5 +1,10 @@
 from enum import Enum
-from .sequence_functions import trigger_download_sequence, trigger_upload_sequence, trigger_exit_sequence, trigger_config_change_sequence
+
+from .sequence_functions import (trigger_config_change_sequence,
+                                 trigger_download_sequence,
+                                 trigger_exit_sequence,
+                                 trigger_upload_sequence)
+
 
 class ActionChoices(Enum):
     UPLOAD = "Upload"

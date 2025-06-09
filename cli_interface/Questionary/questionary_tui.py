@@ -1,7 +1,10 @@
 import sys
+
+from app.settings import get_config
+
 from .question_bank import initialize_question_bank
 from .question_routing import routes
-from app.settings import get_config
+
 
 class QuestionaryTUI():
     def __init__(self, vault) -> None:

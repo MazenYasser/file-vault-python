@@ -1,9 +1,12 @@
 import io
 import os
-from zstandard import ZstdCompressor
-from tqdm import tqdm
 from pathlib import Path
+
+from tqdm import tqdm
+from zstandard import ZstdCompressor
+
 from .config import CHUNK_SIZE, MB_RATE
+
 
 def upload_file(vault, fernet, file: Path):
     cctx = ZstdCompressor(level=22)
