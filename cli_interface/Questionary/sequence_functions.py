@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 from app.vault_app import FileVaultApp
 from app.config import manual_config
+from app.settings import get_config_path
 
 def trigger_upload_sequence(question_bank, vault: FileVaultApp):
     selected_file = question_bank["select_file_upload"].ask()
@@ -16,7 +17,8 @@ def trigger_download_sequence(question_bank, vault: FileVaultApp):
     print("\033[92m" + f"Successfully downloaded, file path: {vault.config.download_destination}/{decrypted_file_path}" + "\033[0m")
 
 def trigger_config_change_sequence(question_bank, vault: FileVaultApp):
-    manual_config(vault.config_path)
+    config_path = get_config_path()
+    manual_config(config_path)
 
 def trigger_exit_sequence(question_bank, vault: FileVaultApp):
     print("Bye!")

@@ -2,8 +2,11 @@ import questionary
 import json
 import sys
 from pathlib import Path
-from dataclasses import dataclass
 from typing import Tuple
+from dataclasses import dataclass
+from app.settings import get_config_path
+
+config_path = get_config_path()
 
 CHUNK_SIZE = 4096
 MB_RATE = 1_000_000
@@ -19,7 +22,7 @@ class Config:
         )
             
 
-def initialize_config():
+def initialize_config() -> Tuple[Path, Path]:
     config_file_path = Path(".filevault_config/config.json")
     config_dir = config_file_path.parent
     if not config_dir.exists():
@@ -39,16 +42,16 @@ def validate_input(config_path: str) -> bool:
     except Exception as e:
         return False
 
-def load_config(config_path: str) -> Tuple[Config, str]:
+def load_config(config_path: str) -> Config:
     with open(config_path, "r") as config_file:
         data = json.load(config_file)
-    return Config(**data), config_path
+    return Config(**data)
 
 def save_config(config_path: str, config: Config):
     with open(config_path, "w") as config_file:
         config_file.write(json.dumps(config.__dict__, indent=4))
 
-def manual_config(config_path) -> Tuple[Config, str]:
+def manual_config(config_path) -> Config:
     config = {
         "upload_destination": questionary.path(
             message="Choose Upload Destination: ",
@@ -74,9 +77,9 @@ def manual_config(config_path) -> Tuple[Config, str]:
         return manual_config(config_path)
     save_config(config_path, cfg)
     print("Config saved successfully.")
-    return cfg, config_path
+    return cfg
 
-def get_or_create_config(config_path, default_config_path) -> Tuple[Config, str]:
+def get_or_create_config(config_path, default_config_path) -> Config:
     if config_path.exists():
         valid = validate_input(config_path)
         if valid:
@@ -98,11 +101,11 @@ def get_or_create_config(config_path, default_config_path) -> Tuple[Config, str]
         )
         choice = load_default_or_config_manually.ask()
         if choice == "Load Defaults":
-            # Load default config and write to the config.json
+            # Load default config and write it to the config.json
             print("Loading default config...")
-            default_config, _ = load_config(default_config_path)
+            default_config = load_config(default_config_path)
             save_config(config_path, default_config)
-            return default_config, config_path
+            return default_config
         elif choice == "Manual Config":
             return manual_config(config_path)
         else:
