@@ -9,7 +9,7 @@ class FileVaultApp:
         self.config = config
         self.config_path = config_path
     
-    def upload(self, directory, file):
+    def upload(self, file):
         """
         Uploads the file to the vault
 
@@ -17,7 +17,7 @@ class FileVaultApp:
             directory (str): Path to the folder that contains the file
             file (str): The file name to upload
         """
-        return upload_chunks(vault=self, fernet=self.fernet, directory=directory, file=file)
+        return upload_chunks(vault=self, fernet=self.fernet, file=file)
         
     
     def download(self, directory, file):

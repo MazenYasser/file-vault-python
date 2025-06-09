@@ -11,7 +11,6 @@ MB_RATE = 1_000_000
 class Config:
     upload_destination: str
     download_destination: str
-    samples_path: str
 
     def is_valid(self):
         return all(
@@ -59,10 +58,6 @@ def manual_config(config_path) -> Tuple[Config, str]:
             message="Choose download destination: ",
             only_directories=True
         ),
-        "samples_path": questionary.path(
-            message="Choose samples path: ",
-            only_directories=True
-        )
     }
     
     # Questionary returns None if the user does a Keyboard interrupt, handling gracefully.
@@ -71,7 +66,7 @@ def manual_config(config_path) -> Tuple[Config, str]:
         if not path:
             print("Cancelled by user, Exiting program...")
             sys.exit(1)
-        config[key] = path
+        config[key] = str(Path(path).resolve())
 
     cfg = Config(**config)
     if not cfg.is_valid():
