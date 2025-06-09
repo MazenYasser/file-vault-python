@@ -35,10 +35,10 @@ app/
 └── settings.py         # Singleton-style config access
 
 cli_interface/Questionary/
-├── questionary_tui.py
-├── question_bank.py
-├── question_routing.py
-└── sequence_functions.py
+├── questionary_tui.py      # Main TUI class using Questionary
+├── question_bank.py        # Centralized question definitions
+├── question_routing.py     # Maps actions to questions and function flows using "Dispatch Map" pattern
+└── sequence_functions.py   # Functions executed for each user action
 
 Data/
 ├── Downloads           # Default downloads folder
