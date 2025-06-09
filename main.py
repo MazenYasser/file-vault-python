@@ -40,4 +40,6 @@ if __name__ == '__main__':
         main(fernet, config)
     except OSError as e:
         print(f"App startup error: {e}")
-
+        tb = traceback.TracebackException.from_exception(e)
+        for line in tb.format():
+            print("\033[91m" + line.strip() + "\033[0m")

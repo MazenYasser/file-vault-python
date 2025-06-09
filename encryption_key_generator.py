@@ -124,5 +124,6 @@ def get_or_create_key():
         password = getpass.getpass("Enter your password to access your FileVault: ")
         return decrypt_fernet_key(password)
     else:
+        key_path.parent.mkdir(parents=True, exist_ok=True)
         password = set_password()
         return decrypt_fernet_key(password)

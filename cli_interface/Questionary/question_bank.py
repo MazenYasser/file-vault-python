@@ -15,6 +15,8 @@ def initialize_question_bank(cfg):
     Returns:
         dict: A dictionary represting a question_bank
     """
+    file_choices = [str(file.name) for file in Path.iterdir(Path(cfg.upload_destination)) if file.is_file()]
+    file_choices.append("Go Back ⬅")
     return {
         "choose_action" : questionary.select(
             message="Choose action:",
@@ -27,6 +29,6 @@ def initialize_question_bank(cfg):
         "select_file_upload": questionary.path(message="Select file or enter file path"),
         "select_file_download": questionary.select(
             message="Select the file you want to download: ",
-            choices=[str(file.name) for file in Path.iterdir(Path(cfg.upload_destination)) if file.is_file()]
+            choices=file_choices
         ),
     }

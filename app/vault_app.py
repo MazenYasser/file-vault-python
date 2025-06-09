@@ -17,7 +17,7 @@ class FileVaultApp:
             directory (str): Path to the folder that contains the file
             file (str): The file name to upload
         """
-        return upload_file(vault=self, fernet=self.fernet, file=file)
+        return upload_file(fernet=self.fernet, file=file)
         
     
     def download(self, directory, file):
@@ -28,4 +28,4 @@ class FileVaultApp:
             directory (str): Download destination
             file (str): The file name to download
         """
-        return download_file(vault=self, fernet=self.fernet, directory=directory, file=file)
+        return download_file(fernet=self.fernet, directory=directory, file=file)

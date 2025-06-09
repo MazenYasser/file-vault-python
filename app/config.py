@@ -1,14 +1,15 @@
 import json
 import sys
+import shlex
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Tuple
 
 import questionary
 
-from app.settings import get_config_path
+from app import settings
 
-config_path = get_config_path()
+config_path = settings.get_config_path()
 
 CHUNK_SIZE = 4096
 MB_RATE = 1_000_000
@@ -53,7 +54,7 @@ def save_config(config_path: str, config: Config):
     with open(config_path, "w") as config_file:
         config_file.write(json.dumps(config.__dict__, indent=4))
 
-def manual_config(config_path) -> Config:
+def manual_config(config_path) -> None:
     config = {
         "upload_destination": questionary.path(
             message="Choose Upload Destination: ",
@@ -70,8 +71,9 @@ def manual_config(config_path) -> Config:
         path = question.ask()
         if not path:
             print("Cancelled by user, Exiting program...")
-            sys.exit(1)
-        config[key] = str(Path(path)).replace("'", "")
+            sys.exit(0)
+        cleaned_path = shlex.split(path)[0]
+        config[key] = str(Path(cleaned_path))
 
     cfg = Config(**config)
     if not cfg.is_valid():
@@ -79,7 +81,8 @@ def manual_config(config_path) -> Config:
         return manual_config(config_path)
     save_config(config_path, cfg)
     print("Config saved successfully.")
-    return cfg
+    settings.configure(config_path=config_path, config=cfg)
+    return
 
 def get_or_create_config(config_path, default_config_path) -> Config:
     if config_path.exists():

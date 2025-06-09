@@ -4,11 +4,13 @@ from pathlib import Path
 
 from tqdm import tqdm
 from zstandard import ZstdCompressor
+from app import settings
 
 from .config import CHUNK_SIZE, MB_RATE
 
 
-def upload_file(vault, fernet, file: Path):
+def upload_file(fernet, file: Path):
+    config = settings.get_config()
     cctx = ZstdCompressor(level=22)
     with io.BytesIO() as memory_buffer:
         
@@ -26,6 +28,6 @@ def upload_file(vault, fernet, file: Path):
             memory_buffer.seek(0)
             compressed_file = memory_buffer.read()
             encrypted_file = fernet.encrypt(compressed_file)
-            with open(f"{vault.config.upload_destination}/{file.name}.zst.maz", "wb") as encrypted_result:
+            with open(f"{config.upload_destination}/{file.name}.zst.maz", "wb") as encrypted_result:
                 encrypted_result.write(encrypted_file)
-    return (os.path.getsize(f"{vault.config.upload_destination}") / MB_RATE)
+    return (os.path.getsize(f"{config.upload_destination}") / MB_RATE)
