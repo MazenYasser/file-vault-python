@@ -92,6 +92,11 @@ main.py                       # Entry point
 - `tqdm`
 - `questionary`
 
+Create a python virtual environment:
+```bash
+python3 -m venv .venv
+```
+
 Install via:
 ```bash
 pip install -r requirements.txt
@@ -103,7 +108,7 @@ pip install -r requirements.txt
 To start the application, run:
 
 ```
-python main.py
+python3 main.py
 ```
 
 ## ✅ Future work
